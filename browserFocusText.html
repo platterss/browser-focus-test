@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Focus Check</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="message">Click anywhere to enter fullscreen</div>
+
+    <script>
+        const messageElement = document.getElementById('message');
+
+        function enterFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            }
+        }
+
+        function checkFocus() {
+            if (!document.hasFocus()) {
+                messageElement.textContent = "Focus lost";
+                document.exitFullscreen();
+            } else {
+                messageElement.textContent = "Focus active";
+            }
+        }
+
+        document.addEventListener('click', enterFullScreen);
+        document.addEventListener('fullscreenchange', function () {
+            if (document.fullscreenElement) {
+                setInterval(checkFocus, 100);  // Checking every 100ms
+            }
+        });
+    </script>
+</body>
+</html>
